@@ -1,0 +1,549 @@
+/* --- 1. Global Reset & Base Styles --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f9;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #1e1b4b;
+}
+
+/* Background Pattern (Modern Dot/Radial Style) */
+.bg-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.15;
+  background: radial-gradient(#7c3aed 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+}
+
+/* --- 2. Header & Sticky Navigation --- */
+header {
+  background: #1e1b4b;
+  color: white;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+header .logo {
+  font-size: 1.5rem;
+}
+
+/* --- 3. Sidebar (400px Desktop Ready) --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -450px; /* Default hidden */
+  width: 280px;
+  height: 100%;
+  background: #1e1b4b;
+  color: white;
+  transition: 0.4s ease-in-out;
+  z-index: 2000;
+  padding: 25px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.active {
+  left: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 400px; /* Bada Sidebar */
+    padding: 40px;
+  }
+  .sidebar ul li a {
+    font-size: 40px !important; /* Bade Links */
+    font-weight: 700;
+  }
+  .sidebar-header h3 {
+    font-size: 2rem;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 30px;
+}
+
+.sidebar ul li {
+  margin: 25px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  color: #a78bfa;
+  padding-left: 10px;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1500;
+}
+
+#overlay.active {
+  display: block;
+}
+
+/* --- 4. Hybrid Text Sections (Breaking Box Monotony) --- */
+.intro-text-block {
+  text-align: center;
+  max-width: 850px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.intro-text-block h1 {
+  font-size: 2.8rem;
+  color: #1e1b4b;
+  margin-bottom: 15px;
+}
+
+.intro-text-block p {
+  font-size: 1.2rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.text-break-divider {
+  background: #7c3aed;
+  color: white;
+  padding: 60px 10%;
+  margin: 50px 0;
+  text-align: center;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 5. Logo & Animation --- */
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.italic-text {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #1e1b4b;
+  font-style: italic;
+  cursor: pointer;
+  display: inline-block;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.italic-text.clicked {
+  font-style: normal !important;
+  transform: scale(1.1) translateY(-5px);
+  color: #7c3aed;
+}
+
+/* --- 6. Cards & Grid System --- */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
+  padding: 20px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.card {
+  background: linear-gradient(to bottom, #f3e8ff 0%, #ffffff 100%);
+  border-radius: 20px;
+  border: 2px solid #7c3aed;
+  box-shadow: 8px 8px 0px #7c3aed;
+  cursor: pointer;
+  overflow: hidden;
+  animation: floating 4s ease-in-out infinite;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.02) !important; /* Thoda upar aur aage */
+  box-shadow: 0 20px 30px rgba(124, 58, 237, 0.3) !important; /* Purple glow shadow */
+  border-color: #a78bfa;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, -12px);
+  }
+}
+
+.card img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-bottom: 2px solid #7c3aed;
+}
+
+.info {
+  padding: 20px;
+  text-align: center;
+}
+
+/* --- 7. Desktop Layout & Switch Logic (FIXED) --- */
+@media (min-width: 1024px) {
+  .container.layout-active {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .layout-active .card {
+    display: flex !important;
+    flex-direction: row; /* Default: Left */
+    width: 100%;
+    max-width: 850px;
+    height: 240px;
+    margin-bottom: 20px;
+  }
+
+  .layout-active .card img {
+    width: 40% !important;
+    height: 100% !important;
+    border-bottom: none !important;
+    border-right: 2px solid #7c3aed;
+  }
+
+  .layout-active .info {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    padding-left: 40px;
+  }
+
+  /* User Choice: Reverse Layout (Right Side Image) */
+  .container.reverse-layout .card {
+    flex-direction: row-reverse !important;
+  }
+
+  .container.reverse-layout .card img {
+    border-right: none !important;
+    border-left: 2px solid #7c3aed;
+  }
+}
+
+/* --- 8. Modals & Footer --- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 35px;
+  border-radius: 25px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  border: 3px solid #7c3aed;
+  position: relative;
+}
+
+#modal-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 4px solid #7c3aed;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+.social-icon {
+  font-size: 2rem;
+  margin: 0 10px;
+  color: #1e1b4b;
+  transition: 0.3s;
+}
+
+footer {
+  background: #1e1b4b;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  margin-top: auto;
+}
+.style-card {
+  background: #ffffff;
+  border: 2px solid #7c3aed;
+  box-shadow: 6px 6px 0px #7c3aed;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.style-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 10px 10px 0px #1e1b4b;
+}
+
+.intro-gap {
+  margin-top: 20px;
+}
+.card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.02) !important; /* Thoda upar aur aage */
+  box-shadow: 0 20px 30px rgba(124, 58, 237, 0.3) !important; /* Purple glow shadow */
+  border-color: #a78bfa;
+}
+/* Sidebar links transition */
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth pop effect */
+  position: relative;
+  color: white;
+  text-decoration: none;
+}
+
+/* Hover aur Active dono ke liye same animation */
+.sidebar ul li a:hover,
+.sidebar ul li a.active-link {
+  background: rgba(124, 58, 237, 0.2); /* Light purple background */
+  color: #a78bfa;
+  transform: translateX(15px) scale(1.05); /* Thoda aage aur bada */
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.5); /* Text pe glow */
+  box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3); /* Peeche shadow */
+}
+
+/* Icon rotation on hover */
+.sidebar ul li a:hover i,
+.sidebar ul li a.active-link i {
+  transform: rotate(-10deg) scale(1.2);
+  color: #a78bfa;
+}
+/* Container for the Info Box */
+.info-box-container {
+  padding: 40px 5%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* The "Dibba" Style */
+.styled-info-box {
+  background: #ffffff;
+  max-width: 900px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 25px;
+  border: 3px solid #7c3aed; /* Purple Border */
+  box-shadow: 12px 12px 0px #1e1b4b; /* Solid Dark Shadow like cards */
+  position: relative;
+  transition: all 0.4s ease;
+  text-align: center;
+}
+
+/* Hover Effect: Box aage aayega aur shadow glow karegi */
+.styled-info-box:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 15px 15px 30px rgba(124, 58, 237, 0.2);
+  border-color: #a78bfa;
+}
+
+.styled-info-box h2 {
+  font-size: 2.2rem;
+  color: #1e1b4b;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.styled-info-box p {
+  font-size: 1.2rem;
+  color: #4b5563;
+  line-height: 1.8;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Decorative Quote Icons */
+.quote-icon {
+  font-size: 2rem;
+  color: #a78bfa;
+  opacity: 0.3;
+  position: absolute;
+  top: 20px;
+  left: 30px;
+}
+
+.quote-icon-right {
+  font-size: 2rem;
+  color: #a78bfa;
+  opacity: 0.3;
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .styled-info-box {
+    padding: 30px 20px;
+  }
+  .styled-info-box h2 {
+    font-size: 1.8rem;
+  }
+}
+/* ... (Aapki purani Global Reset, Header, aur Sidebar styles yahan rahengi) ... */
+
+/* Sidebar Active Link Pop Effect */
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active-link {
+  background: rgba(124, 58, 237, 0.2);
+  color: #a78bfa;
+  transform: translateX(15px) scale(1.05);
+  box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Info Box & Levels Intro Styles */
+.info-box-container,
+.level-intro-box,
+.level-outro-box {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.styled-info-box {
+  background: #ffffff;
+  width: 100%;
+  padding: 40px;
+  border-radius: 25px;
+  border: 3px solid #7c3aed;
+  box-shadow: 12px 12px 0px #1e1b4b;
+  text-align: center;
+  transition: 0.4s ease;
+}
+
+.gold-border {
+  border-color: #ffd700 !important;
+  box-shadow: 10px 10px 0px #ffd700 !important;
+}
+
+/* Levels Grid */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  grid-column: 1 / -1;
+}
+
+.level-card {
+  background: #ffffff;
+  border: 2px solid #7c3aed;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 8px 8px 0px #7c3aed;
+  transition: 0.4s;
+}
+
+.level-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 12px 12px 0px #1e1b4b;
+}
+
+.watch-btn {
+  background: #7c3aed;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.name {
+  padding-bottom: 15px;
+}

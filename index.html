@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeYogi Pro UI - Pranjal Sonkar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="sp.css" />
+    <link rel="stylesheet" href="srl.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styl.css" />
+    <link rel="stylesheet" href="styls.css" />
+    <link rel="stylesheet" href="src.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-pattern">
+      <div class="bg-pattern-overlay"></div>
+    </div>
+
+    <div id="layout-popup" class="modal">
+      <div class="modal-content">
+        <i
+          class="fas fa-desktop"
+          style="font-size: 3rem; color: #7c3aed; margin-bottom: 15px"
+        ></i>
+        <h3>Custom Layout Settings</h3>
+        <p style="color: darkblue">
+          Badi screen par image kis taraf dikhni chahiye? Aap ise baad mein
+          sidebar se badal sakte hain.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 25px;
+          "
+        >
+          <button
+            id="btn-left"
+            style="
+              padding: 12px 25px;
+              background: #22c55e;
+              color: white;
+              border: none;
+              border-radius: 12px;
+              cursor: pointer;
+              font-weight: bold;
+            "
+          >
+            Left Side
+          </button>
+          <button
+            id="btn-right"
+            style="
+              padding: 12px 25px;
+              background: #7c3aed;
+              color: white;
+              border: none;
+              border-radius: 12px;
+              cursor: pointer;
+              font-weight: bold;
+            "
+          >
+            Right Side
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-wrapper">
+      <header
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+        "
+      >
+        <div class="logo"><strong>CodeYogi</strong></div>
+
+        <div
+          id="theme-toggle"
+          style="
+            cursor: pointer;
+            font-size: 1.6rem;
+            transition: transform 0.3s ease;
+          "
+        >
+          <i class="fas fa-moon" id="theme-icon" style="color: #7c3aed"></i>
+        </div>
+
+        <i
+          class="fas fa-bars"
+          id="menu-icon"
+          style="cursor: pointer; font-size: 1.5rem"
+        ></i>
+      </header>
+
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <h3>Explorer</h3>
+          <i
+            class="fas fa-times"
+            id="close-btn"
+            style="cursor: pointer; font-size: 1.5rem"
+          ></i>
+        </div>
+        <ul>
+          <li>
+            <a href="#" class="nav-link" data-page="team-page"
+              ><i class="fas fa-users"></i> Team Members</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-page="levels-page"
+              ><i class="fas fa-layer-group"></i> Learning Levels</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-page="about-me-page">
+              <i class="fas fa-user-circle"></i> About Me
+            </a>
+          </li>
+
+          <hr style="opacity: 0.1; margin: 20px 0" />
+          <li>
+            <a href="#" id="switch-side-btn" style="color: #a78bfa"
+              ><i class="fas fa-exchange-alt"></i> Switch Image Side</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div id="overlay"></div>
+
+      <main>
+        <section class="intro-text-block fade-in">
+          <div class="logo-container">
+            <div
+              id="cy-pro-container"
+              style="
+                position: relative;
+                display: inline-block;
+                padding: 50px;
+                cursor: pointer;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+              "
+            >
+              <style>
+                /* Container for the glow */
+                .glow-wrapper {
+                  position: relative;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  transition: all 0.3s ease;
+                }
+
+                /* Blue Aura / Glow Effect */
+                .blue-aura {
+                  position: absolute;
+                  width: 120%;
+                  height: 120%;
+                  background: radial-gradient(
+                    circle,
+                    rgba(0, 150, 255, 0.4) 0%,
+                    rgba(0, 150, 255, 0) 70%
+                  );
+                  border-radius: 50%;
+                  filter: blur(20px);
+                  z-index: 1;
+                  transition: all 0.4s ease;
+                  box-shadow: 0 0 30px rgba(0, 150, 255, 0.5);
+                }
+
+                /* Main Symbol Style */
+                #cy-symbol {
+                  width: clamp(80px, 20vw, 120px);
+                  height: auto;
+                  position: relative;
+                  z-index: 10;
+                  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                  filter: drop-shadow(0 0 10px rgba(0, 150, 255, 0.3));
+                }
+
+                /* --- INTERACTION STATES --- */
+
+                /* Hover: Glow thoda aur badhega */
+                #cy-pro-container:hover .blue-aura {
+                  background: radial-gradient(
+                    circle,
+                    rgba(0, 180, 255, 0.6) 0%,
+                    rgba(0, 180, 255, 0) 75%
+                  );
+                  box-shadow: 0 0 50px rgba(0, 180, 255, 0.7);
+                }
+
+                /* Click (Active): Glow kam hoga aur Symbol bahar aayega */
+                #cy-pro-container:active .blue-aura {
+                  opacity: 0.2; /* Glow kam ho gaya */
+                  transform: scale(0.8);
+                  box-shadow: 0 0 10px rgba(0, 150, 255, 0.2);
+                }
+
+                #cy-pro-container:active #cy-symbol {
+                  transform: scale(1.3); /* Symbol ubhar kar aage aa gaya */
+                  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+                }
+              </style>
+
+              <div class="glow-wrapper">
+                <div class="blue-aura"></div>
+
+                <img src="CodeYogi.png" id="cy-symbol" alt="CodeYogi Symbol" />
+              </div>
+            </div>
+
+            <script>
+              // Smooth interaction ke liye thoda JS
+              const container = document.getElementById("cy-pro-container");
+
+              container.addEventListener("mousedown", () => {
+                // Aap yahan koi sound ya vibration bhi add kar sakte hain
+              });
+            </script>
+
+            <span class="italic-text button" id="cy-text">CodeYogi</span>
+          </div>
+          <h1 style="color: indigo">Empowering Future Developers</h1>
+          <p style="margin-bottom: 30px; color: lightcyan">
+            We believe in the power of logic and the art of clean code. Our team
+            of mentors is here to guide you through every programming hurdle.
+          </p>
+          <div
+            class="mission-grid intro-gap"
+            style="
+              display: flex;
+              justify-content: center;
+              gap: 20px;
+              flex-wrap: wrap;
+              margin-bottom: 40px;
+            "
+          >
+            <div class="style-card">
+              <i class="fas fa-rocket" style="color: indigo"></i
+              ><span>Skill Transformation</span>
+            </div>
+            <div class="style-card">
+              <i class="fas fa-code" style="color: indigo"></i
+              ><span>Practical Learning</span>
+            </div>
+            <div class="style-card">
+              <i class="fas fa-heart" style="color: #ef4444"></i
+              ><span>Community Support</span>
+            </div>
+          </div>
+        </section>
+
+        <div id="team-page" class="container">
+          <div class="card" data-member="member-1">
+            <img src="Prashant-Chaudhary.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Prashant Chaudhary</h2>
+              <h4>
+                ​Co-Founder, CTO (Chief Technology Officer) & CEO(Chief
+                Executive Officer)
+              </h4>
+            </div>
+          </div>
+          <div class="card" data-member="member-2">
+            <img src="Rakesh-Sehgal.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Dr. Rakesh Sehgal</h2>
+              <p>​Owner & CRO (Chief Revenue Officer)</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-3">
+            <img src="Priyanka-Sethi.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Priyanka Sethi</h2>
+              <p>​COO (Chief Operating Officer)</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-4">
+            <img src="Anushka-Bisht.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Anushka Bisht</h2>
+              <p>​Children Success Officer (CSO)</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-5">
+            <img src="Payal-Lodhi.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Payal Lodhi</h2>
+              <p>
+                ​Children Success Officer (CSO) & Digital Marketer or Marketing
+                Lead
+              </p>
+            </div>
+          </div>
+          <div class="card" data-member="member-5">
+            <img src="Shristy-Bailwal.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Shristy Bailwal</h2>
+              <p>
+                ​Children Success Officer (CSO) & Online Test Taker.
+              </p>
+            </div>
+          </div>
+          <div class="card" data-member="member-6">
+            <img src="Shrivridhi-Sharma.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">​Shrivridhi Sharma</h2>
+              <p>​Program/ Event Manager</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-8">
+            <img src="Ved-Singh-Rawat.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">Ved Singh Rawat</h2>
+              <p>Developer/Tech Enthusiast</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-8">
+            <img src="Aman-Panwar.jpg" alt="M" />
+            <div class="info">
+              <h2 class="name">Aman Panwar</h2>
+              <p></p>
+            </div>
+          </div>
+          <div class="card" data-member="member-8">
+            <img src="https://via.placeholder.com/150" alt="M" />
+            <div class="info">
+              <h2 class="name">Karn Singh</h2>
+              <p>Group & Children Manager</p>
+            </div>
+          </div>
+          <div class="card" data-member="member-8">
+            <img src="https://via.placeholder.com/150" alt="M" />
+            <div class="info">
+              <h2 class="name">Ankit Sir (SrcNexus)</h2>
+              <p>App Developer & Web Developer</p>
+            </div>
+          </div>
+
+          <section
+            class="info-box-container"
+            style="grid-column: 1 / -1; width: 100%"
+          >
+            <div class="styled-info-box">
+              <div class="box-content">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <h2>A Community Driven by Passion</h2>
+                <p style="color: darkcyan">
+                  CodeYogi is not just a school; it's a movement. Our mentors
+                  come from top tech companies to ensure you learn what actually
+                  matters.
+                </p>
+                <i class="fas fa-quote-right quote-icon-right"></i>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div id="levels-page" class="container hidden">
+          <section
+            class="level-intro-box"
+            style="grid-column: 1 / -1; width: 100%"
+          >
+            <div class="styled-info-box">
+              <h2>🚀 Why Start This Journey?</h2>
+              <p>
+                Level 1 se 98 tak ka ye safar aapko ek beginner se
+                "Industry-Ready" Software Engineer bana dega. Har video ek nayi
+                siddhi hai!
+              </p>
+            </div>
+          </section>
+          <div
+            class="search-container"
+            style="
+              grid-column: 1 / -1;
+              width: 100%;
+              margin: 20px 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+            "
+          >
+            <div
+              style="
+                position: relative;
+                width: 100%;
+                max-width: 500px;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 50px;
+                padding: 5px 15px;
+                border: 2px solid #7c3aed;
+                box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+                display: flex;
+                align-items: center;
+              "
+            >
+              <i
+                class="fas fa-search"
+                style="color: #7c3aed; margin-right: 15px; font-size: 1.2rem"
+              ></i>
+
+              <input
+                type="text"
+                id="level-search-input"
+                placeholder="Search Level (e.g. Level 1)..."
+                style="
+                  width: 100%;
+                  background: transparent;
+                  border: none;
+                  outline: none;
+                  color: #7c3aed;
+                  font-size: 1rem;
+                  padding: 10px 0;
+                  font-weight: 500;
+                "
+              />
+
+              <span
+                id="search-clear"
+                style="
+                  cursor: pointer;
+                  color: #ef4444;
+                  font-weight: bold;
+                  margin-left: 10px;
+                  display: none;
+                "
+                >&times;</span
+              >
+            </div>
+
+            <script>
+              document
+                .getElementById("level-search-input")
+                .addEventListener("keyup", function () {
+                  let filter = this.value.toUpperCase();
+                  let container = document.getElementById("levels-container");
+                  let cards = container.getElementsByClassName("level-card"); // Ensure your levels have this class
+                  let clearBtn = document.getElementById("search-clear");
+
+                  // Clear button visibility
+                  clearBtn.style.display = filter.length > 0 ? "block" : "none";
+
+                  for (let i = 0; i < cards.length; i++) {
+                    let text = cards[i].textContent || cards[i].innerText;
+                    if (text.toUpperCase().indexOf(filter) > -1) {
+                      cards[i].style.display = "";
+                      cards[i].style.animation = "fadeIn 0.4s ease forwards";
+                    } else {
+                      cards[i].style.display = "none";
+                    }
+                  }
+                });
+
+              document
+                .getElementById("search-clear")
+                .addEventListener("click", function () {
+                  let input = document.getElementById("level-search-input");
+                  input.value = "";
+                  input.dispatchEvent(new Event("keyup"));
+                });
+            </script>
+          </div>
+
+          <div class="levels-grid" id="levels-container"></div>
+
+          <section
+            class="level-outro-box"
+            style="grid-column: 1 / -1; width: 100%; margin-top: 40px"
+          >
+            <div class="styled-info-box gold-border">
+              <h2>🏆 What Will You Achieve?</h2>
+              <p>
+                Level 98 khatam karne ke baad aapke paas honge Deep Logic
+                Building skills aur Full-Stack Mastery.
+              </p>
+            </div>
+          </section>
+        </div>
+        <div id="about-me-page" class="container hidden" style="display: none">
+          <section style="grid-column: 1 / -1; width: 100%; color: white">
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 20px;
+                padding: 40px;
+                text-align: center;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+              "
+            >
+              <div
+                style="
+                  position: relative;
+                  display: inline-block;
+                  margin-bottom: 20px;
+                "
+              >
+                <img
+                  src="me.jpg"
+                  alt="Pranjal"
+                  style="
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    border: 4px solid #7c3aed;
+                    padding: 5px;
+                    object-fit: cover;
+                  "
+                />
+                <div
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    background: #22c55e;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    border: 3px solid #1a1a1a;
+                  "
+                ></div>
+              </div>
+
+              <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: #fff">
+                Pranjal Sonkar
+              </h1>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                  margin-bottom: 25px;
+                  background: rgba(124, 58, 237, 0.1);
+                  padding: 12px;
+                  border-radius: 12px;
+                  border-left: 3px solid #7c3aed;
+                  max-width: fit-content;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+              >
+                <div
+                  style="
+                    color: lightcyan;
+                    font-size: 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                  "
+                >
+                  <i class="fas fa-graduation-cap" style="color: #7c3aed"></i>
+                  <span><strong>Class:</strong> 10th Standard</span>
+                </div>
+
+                <div
+                  style="
+                    color: lightcyan;
+                    font-size: 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                  "
+                >
+                  <i class="fas fa-school" style="color: #7c3aed"></i>
+                  <span><strong>School:</strong>S.S.S.V Inter College</span>
+                </div>
+              </div>
+              <p
+                style="
+                  color: #a78bfa;
+                  font-weight: bold;
+                  font-size: 1.2rem;
+                  margin-bottom: 20px;
+                "
+              >
+                Aspiring Developer & Tech Enthusiast
+              </p>
+
+              <div
+                style="
+                  max-width: 700px;
+                  margin: 0 auto;
+                  line-height: 1.8;
+                  color: darkcyan;
+                  font-size: 1.1rem;
+                "
+              >
+                <p>
+                  Hello! I'm a passionate developer dedicated to building clean,
+                  functional, and user-centric web applications. Currently, I'm
+                  honing my skills within the
+                  <strong>CodeYogi</strong> ecosystem.
+                </p>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  justify-content: center;
+                  gap: 20px;
+                  margin-top: 30px;
+                "
+              >
+                <a
+                  href="tel:+98240832626"
+                  style="color: voilet; font-size: 1.5rem; transition: 0.3s"
+                >
+                  <i class="fas fa-phone-alt"></i>
+                </a>
+                <a
+                  href="https://wa.me/918240832626"
+                  style="color: #25d366; font-size: 1.5rem; transition: 0.3s"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a
+                  href="https://t.me/Anime_Marvel_DC_Fantasy_Lover327"
+                  style="color: #0088cc; font-size: 1.5rem; transition: 0.3s"
+                >
+                  <i class="fab fa-telegram"></i>
+                </a>
+              </div>
+
+              <div
+                style="margin-top: 40px; display: flex; justify-content: center"
+              >
+                <div
+                  id="project-card-btn"
+                  style="
+                    background: rgba(124, 58, 237, 0.1);
+                    padding: 15px 30px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(124, 58, 237, 0.3);
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    max-width: 200px;
+                  "
+                  onmouseover="this.style.background='rgba(124, 58, 237, 0.2)'"
+                  onmouseout="this.style.background='rgba(124, 58, 237, 0.1)'"
+                >
+                  <i
+                    class="fas fa-code-branch"
+                    style="color: #7c3aed; margin-bottom: 10px"
+                  ></i>
+                  <h4 style="margin: 0">3 Projects</h4>
+                  <small style="color: #a78bfa">(Click to view)</small>
+                </div>
+              </div>
+
+              <div
+                id="project-links-list"
+                style="
+                  display: none;
+                  max-width: 400px;
+                  margin: 20px auto 0;
+                  background: rgba(0, 0, 0, 0.3);
+                  border-radius: 15px;
+                  padding: 20px;
+                  text-align: left;
+                  border-left: 4px solid #7c3aed;
+                  animation: slideDown 0.4s ease forwards;
+                "
+              >
+                <ul style="list-style: none; padding: 0; margin: 0">
+                  <li style="margin-bottom: 12px">
+                    <a
+                      href="https://pranjal.srcnexus.app/gift_for_team_codeyogi"
+                      target="_blank"
+                      style="
+                        color: lightcyan;
+                        text-decoration: none;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-external-link-alt"
+                        style="
+                          margin-right: 12px;
+                          font-size: 0.9rem;
+                          color: #7c3aed;
+                        "
+                      ></i>
+                      Project 1: This Website
+                    </a>
+                  </li>
+                  <li style="margin-bottom: 12px">
+                    <a
+                      href="https://codekings.netlify.app/pranjal/imported_project_2"
+                      target="_blank"
+                      style="
+                        color: lightcyan;
+                        text-decoration: none;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-external-link-alt"
+                        style="
+                          margin-right: 12px;
+                          font-size: 0.9rem;
+                          color: #7c3aed;
+                        "
+                      ></i>
+                      Project 2: My Dream's Website/ PVAAS Animation Website
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://codekings.netlify.app/pranjal/Happy_Republic_Day?text=Happy%20Republic%20Day%20to%20all%20of%20you%20%F0%9F%99%8F%F0%9F%8F%BB%F0%9F%AB%A1%F0%9F%98%8A"
+                      target="_blank"
+                      style="
+                        color: lightcyan;
+                        text-decoration: none;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <i
+                        class="fas fa-external-link-alt"
+                        style="
+                          margin-right: 12px;
+                          font-size: 0.9rem;
+                          color: #7c3aed;
+                        "
+                      ></i>
+                      Project 3: Republic Day Project
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <style>
+          @keyframes slideDown {
+            from {
+              opacity: 0;
+              transform: translateY(-10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        </style>
+        <script>
+          // --- 1. Project Card Toggle Logic ---
+          const projectBtn = document.getElementById("project-card-btn");
+          const projectList = document.getElementById("project-links-list");
+
+          if (projectBtn && projectList) {
+            projectBtn.addEventListener("click", (e) => {
+              e.stopPropagation(); // Bubbling rokne ke liye
+
+              const isHidden =
+                projectList.style.display === "none" ||
+                projectList.style.display === "";
+
+              if (isHidden) {
+                projectList.style.display = "block";
+                projectBtn.style.borderColor = "#22c55e"; // Open hone par green border
+                projectBtn.style.background = "rgba(34, 197, 94, 0.1)"; // Halka green touch
+              } else {
+                projectList.style.display = "none";
+                projectBtn.style.borderColor = "rgba(124, 58, 237, 0.3)"; // Wapas purana color
+                projectBtn.style.background = "rgba(124, 58, 237, 0.1)";
+              }
+            });
+          }
+
+          // --- 2. Global Navigation Logic ---
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.addEventListener("click", function (e) {
+              const targetPageId = this.getAttribute("data-page");
+
+              // Agar data-page nahi hai toh normal link ki tarah chalne dein
+              if (!targetPageId) return;
+
+              e.preventDefault();
+
+              // Sabhi containers aur intro section ko hide karein
+              const sectionsToHide = document.querySelectorAll(
+                ".container, .intro-text-block",
+              );
+              sectionsToHide.forEach((page) => {
+                page.classList.add("hidden");
+                page.style.display = "none";
+              });
+
+              // Target page ko dhoondein aur show karein
+              const targetPage = document.getElementById(targetPageId);
+              if (targetPage) {
+                targetPage.classList.remove("hidden");
+
+                // Layout fix: About page ko block aur baaki ko grid
+                targetPage.style.display =
+                  targetPageId === "about-me-page" ? "block" : "grid";
+
+                // Page ke sabse upar scroll karein
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+
+              // Sidebar ko band karein (Mobile users ke liye)
+              const sidebar = document.getElementById("sidebar");
+              const overlay = document.getElementById("overlay");
+              if (sidebar) sidebar.classList.remove("active");
+              if (overlay) overlay.style.display = "none";
+            });
+          });
+
+          // --- 3. Home / Logo Logic ---
+          const logo = document.querySelector(".logo");
+          if (logo) {
+            logo.addEventListener("click", () => {
+              // Home par jaane ke liye page refresh
+              location.reload();
+            });
+          }
+        </script>
+      </main>
+
+      <footer>
+        <p>Made with ❤️ by Pranjal Sonkar for CodeYogi Team</p>
+      </footer>
+    </div>
+
+    <script src="java.js"></script>
+    <script src="script.js"></script>
+    <script src="scripts.js"></script>
+    <script src="scrpt.js"></script>
+    <script src="js.js"></script>
+  </body>
+</html>

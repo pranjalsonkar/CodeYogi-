@@ -1,0 +1,683 @@
+/* --- 1. DESIGN TOKENS --- */
+:root {
+  --primary: #7c3aed;
+  --primary-light: #a78bfa;
+  --primary-glow: rgba(124, 58, 237, 0.4);
+  --gold: #fbbf24;
+  --bg-dark: #020617;
+  --bg-card: rgba(30, 41, 59, 0.4);
+  --text-light: #f8fafc;
+  --text-muted: #94a3b8;
+  --transition-premium: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.15;
+  background: radial-gradient(var(--primary) 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+}
+
+/* --- 3. HEADER & SIDEBAR --- */
+header {
+  background: #1e1b4b;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -450px;
+  width: 320px;
+  height: 100%;
+  background: #0f172a;
+  z-index: 2001;
+  transition: var(--transition-premium);
+  padding: 2.5rem;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: var(--transition-premium);
+}
+
+.nav-link:hover {
+  background: rgba(124, 58, 237, 0.2);
+  color: var(--primary-light);
+  transform: translateX(10px);
+}
+
+/* --- 4. INTRO SECTION & MISSION GRID --- */
+.intro-text-block {
+  text-align: center;
+  padding: 60px 5%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.italic-text {
+  font-size: 4rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--primary-light);
+  text-shadow: 3px 3px 0px var(--primary);
+}
+
+.style-card {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid var(--primary);
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(5px);
+}
+
+/* --- 5. TEAM CARDS (Responsive & Dynamic) --- */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 35px;
+  padding: 40px 5%;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 25px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 8px 8px 0px var(--primary);
+  transition: var(--transition-premium);
+  backdrop-filter: blur(10px);
+}
+
+.card img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  margin-bottom: 20px;
+  animation: floating 4s ease-in-out infinite;
+  object-fit: cover;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 15px 15px 30px var(--primary-glow);
+  border-color: var(--primary-light);
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+
+  .card {
+    flex-direction: row;
+    text-align: left;
+    padding: 25px 40px;
+  }
+  .card img {
+    margin-bottom: 0;
+    margin-right: 30px;
+  }
+
+  /* Side Switch Logic */
+  body.layout-right .card {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+  body.layout-right .card img {
+    margin-right: 0;
+    margin-left: 30px;
+  }
+}
+
+/* --- 6. LEVELS PAGE STYLES --- */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
+
+.level-card {
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 8px 8px 0px var(--primary);
+  transition: 0.3s ease;
+}
+
+.level-card:hover {
+  border-color: var(--gold);
+  box-shadow: 10px 10px 0px var(--gold);
+  transform: scale(1.05);
+}
+
+/* --- 7. INFO BOXES --- */
+.styled-info-box {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 50px;
+  border-radius: 30px;
+  border: 3px solid var(--primary);
+  box-shadow: 12px 12px 0px #1e1b4b;
+  position: relative;
+  text-align: center;
+}
+
+.quote-icon,
+.quote-icon-right {
+  font-size: 2rem;
+  color: var(--primary-light);
+  opacity: 0.3;
+}
+
+.gold-border {
+  border-color: var(--gold) !important;
+  box-shadow: 12px 12px 0px var(--gold) !important;
+}
+
+/* --- 8. MODALS & OVERLAY --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #0f172a;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 50px var(--primary-glow);
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  z-index: 2000;
+}
+
+#overlay.active {
+  display: block;
+}
+
+/* --- 9. FOOTER --- */
+footer {
+  padding: 40px;
+  text-align: center;
+  background: #010413;
+  border-top: 2px solid var(--primary);
+  margin-top: 50px;
+}
+
+.hidden {
+  display: none !important;
+}
+/* --- 1. GLOBAL ANIMATIONS --- */
+@keyframes fullCardFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  } /* Pura dibba upar jayega */
+}
+
+/* --- 2. CODEYOGI TEXT POP --- */
+.italic-text {
+  display: inline-block;
+  font-size: 4.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--primary-light);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+/* Hover ya Click par straight aur bada hokar aage aana */
+.italic-text:hover,
+.italic-text.clicked {
+  font-style: normal;
+  transform: scale(1.2) translateZ(50px);
+  text-shadow: 0 0 20px var(--primary-glow);
+  color: #fff;
+}
+
+/* --- 3. COMMUNITY BLOCK (Upar lane ke liye) --- */
+#team-page {
+  display: flex;
+  flex-direction: column; /* Column layout taaki order manage ho sake */
+  gap: 40px;
+}
+
+.info-box-container {
+  order: -1; /* Isse Community wala dibba sabse upar chala jayega */
+  width: 100%;
+}
+
+/* --- 4. FULL CARD FLOATING (Dibba hilna) --- */
+.card {
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 8px 8px 0px var(--primary);
+  animation: fullCardFloat 5s ease-in-out infinite; /* Pura dibba hilega */
+  transition: var(--transition-premium);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hover par hilna band aur glow shuru */
+.card:hover {
+  animation-play-state: paused;
+  transform: scale(1.05) translateY(-10px);
+  box-shadow: 0 20px 40px var(--primary-glow);
+  border-color: var(--primary-light);
+}
+
+.card img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+/* --- 5. LAYOUT POPUP (Saamne khulne wala dibba) --- */
+.modal-content {
+  background: #0f172a;
+  padding: 50px;
+  border-radius: 30px;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 100px rgba(124, 58, 237, 0.6); /* Zyada glow */
+  transform: scale(1.1); /* Thoda bada dikhega */
+  animation: modalEnter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1) translateY(0);
+  }
+}
+
+/* --- 6. DESKTOP ADJUSTMENT --- */
+@media (min-width: 1024px) {
+  #team-page {
+    display: grid; /* Grid wapas grid ban jayega par row management ke saath */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+
+  .info-box-container {
+    grid-column: 1 / -1; /* Full width upar */
+  }
+
+  .card {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .card img {
+    margin-bottom: 0;
+    margin-right: 30px;
+  }
+}
+/* --- 1. GLOBAL 3D PERSPECTIVE --- */
+body {
+  perspective: 1000px; /* Isse 3D effect asli lagta hai */
+}
+
+/* --- 2. MISSION CARDS (Teen upar wale dibbe) --- */
+.mission-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  perspective: 1000px;
+}
+
+.style-card {
+  background: #ffffff10;
+  border: 2px solid var(--primary);
+  box-shadow: 6px 6px 0px var(--primary);
+  border-radius: 15px;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+}
+
+/* CLICK/ACTIVE EFFECT: Ekdum saamne khul kar aana */
+.style-card:active,
+.style-card.active-pop {
+  transform: scale(1.3) translateZ(100px); /* Ekdum screen ke paas aayega */
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 20px 50px var(--primary-glow);
+  z-index: 99;
+}
+
+.style-card:hover {
+  transform: translateY(-10px) rotateX(10deg);
+  border-color: var(--primary-light);
+}
+
+/* --- 3. CODEYOGI TEXT (Straight Pop) --- */
+.italic-text {
+  display: inline-block;
+  font-size: 4.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--primary-light);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+/* Click hone par straight aur bada hokar aage aana */
+.italic-text.clicked,
+.italic-text:active {
+  font-style: normal !important;
+  transform: scale(1.2) translateZ(80px);
+  text-shadow: 0 0 30px var(--primary-glow);
+  color: #fff;
+}
+
+/* --- 4. COMMUNITY BOX (Order Management) --- */
+#team-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-box-container {
+  order: -1; /* Isse Community support wala bada dibba hamesha TEAM ke upar aayega */
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* --- 5. FULL CARD FLOATING (Pura Dibba Hilna) --- */
+@keyframes fullFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.card {
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 8px 8px 0px var(--primary);
+  animation: fullFloat 6s ease-in-out infinite; /* Pura dibba hawa mein tair raha hai */
+  transition: var(--transition-premium);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card:hover {
+  animation-play-state: paused; /* Hover par hilna band */
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 25px 50px var(--primary-glow);
+}
+
+/* --- 6. MODAL/POPUP (Bada aur Saaf) --- */
+.modal-content {
+  background: #0f172a;
+  padding: 50px;
+  border-radius: 30px;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 80px var(--primary-glow);
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.5) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Desktop Grid Adjust */
+@media (min-width: 1024px) {
+  #team-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+  }
+  .info-box-container {
+    grid-column: 1 / -1;
+  }
+  .card {
+    flex-direction: row;
+    text-align: left;
+  }
+  .card img {
+    margin-bottom: 0;
+    margin-right: 30px;
+  }
+}
+/* --- 1. MODAL FIX (ID Click hone par jo dikhta hai) --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Sabse upar dikhne ke liye */
+  background: rgba(2, 6, 23, 0.9); /* Darker overlay */
+  backdrop-filter: blur(12px);
+  padding: 20px;
+}
+
+.modal.active {
+  display: flex;
+  animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-content {
+  background: #0f172a;
+  padding: 40px;
+  border-radius: 30px;
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 60px var(--primary-glow);
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  color: white;
+}
+
+#modal-img {
+  width: 160px; /* Badi image */
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid var(--primary);
+  margin-bottom: 20px;
+  object-fit: cover;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* --- 2. MISSION CARDS POP (Skill, Practical, Community) --- */
+.style-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Jab click ho (Active state) */
+.style-card:active,
+.style-card.clicked-pop {
+  transform: scale(1.25) translateZ(50px);
+  background: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 15px 40px var(--primary-glow) !important;
+  z-index: 100;
+}
+
+/* --- 3. PRASHANT SIR & TEAM CARD HOVER --- */
+.card {
+  cursor: pointer;
+  animation: fullFloat 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.card:hover {
+  animation-play-state: paused;
+  transform: translateY(-15px) scale(1.03);
+  box-shadow: 0 25px 50px var(--primary-glow);
+  border-color: var(--primary-light);
+}
+
+/* --- 4. CODEYOGI TEXT POP --- */
+.italic-text {
+  display: inline-block;
+  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.italic-text:hover,
+.italic-text.clicked {
+  font-style: normal !important;
+  transform: scale(1.3) translateY(-10px);
+  color: white;
+  text-shadow: 0 0 30px var(--primary-glow);
+}
+
+/* Animations */
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fullFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Close Button in Modal */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 2rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.close-button:hover {
+  color: white;
+}

@@ -1,0 +1,319 @@
+/* --- 1. CORE DESIGN TOKENS --- */
+:root {
+  --primary: #7c3aed;
+  --primary-glow: rgba(124, 58, 237, 0.5);
+  --gold: #fbbf24;
+  --bg-dark: #020617;
+  --bg-card: rgba(30, 41, 59, 0.5);
+  --text-light: #f8fafc;
+  --text-muted: #94a3b8;
+  --transition-premium: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- 3. NEON BACKGROUND --- */
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--bg-dark);
+}
+
+.bg-pattern-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(124, 58, 237, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(34, 197, 94, 0.1) 0%,
+      transparent 50%
+    );
+}
+
+/* --- 4. HEADER & SIDEBAR --- */
+header {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100%;
+  background: #0f172a;
+  z-index: 2001;
+  transition: var(--transition-premium);
+  padding: 2.5rem;
+  box-shadow: 20px 0 50px rgba(0, 0, 0, 0.7);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active-link {
+  background: var(--primary);
+  color: white;
+  transform: translateX(10px);
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1500;
+  display: none;
+}
+
+#overlay.active {
+  display: block;
+}
+
+/* --- 5. INTRO & MISSION GRID --- */
+.intro-text-block {
+  text-align: center;
+  padding: 80px 5% 40px;
+}
+
+.italic-text {
+  font-size: 4rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--primary);
+  text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.style-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.style-card:hover {
+  background: rgba(124, 58, 237, 0.1);
+  transform: translateY(-5px);
+}
+
+/* --- 6. INFO BOXES (Rocket & Trophy) --- */
+.styled-info-box {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 60px 40px;
+  border-radius: 40px;
+  border: 2px solid var(--primary);
+  text-align: center;
+  position: relative;
+  transition: var(--transition-premium);
+  animation: floatingBox 5s ease-in-out infinite;
+}
+
+/* Rocket Style (Intro) */
+.level-intro-box .styled-info-box::after {
+  content: "🚀";
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 5rem;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+  animation: rocketLaunch 3s ease-in-out infinite;
+}
+
+/* Trophy Style (Outro) */
+.level-outro-box .styled-info-box.gold-border {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+}
+
+.level-outro-box .styled-info-box.gold-border::after {
+  content: "🏆";
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 5rem;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+  animation: trophyBounce 2s ease-in-out infinite;
+}
+
+/* --- 7. TEAM CARDS & LAYOUT ENGINE --- */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 40px 5%;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-premium);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--primary);
+  box-shadow: 0 15px 30px var(--primary-glow);
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  object-fit: cover;
+}
+
+.info {
+  margin-left: 20px;
+}
+
+/* Desktop Side Switching */
+@media (min-width: 1024px) {
+  body.layout-right .card {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+  body.layout-right .card .info {
+    margin-left: 0;
+    margin-right: 20px;
+  }
+}
+
+/* --- 8. MODALS --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #0f172a;
+  padding: 40px;
+  border-radius: 30px;
+  border: 2px solid var(--primary);
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+#modal-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  margin-bottom: 20px;
+}
+
+/* --- 9. ANIMATIONS --- */
+@keyframes floatingBox {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes rocketLaunch {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes trophyBounce {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.15) translateY(-10px);
+  }
+}
+
+/* --- 10. FOOTER --- */
+footer {
+  padding: 50px;
+  text-align: center;
+  background: #010413;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 50px;
+}
